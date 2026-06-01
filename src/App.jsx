@@ -233,21 +233,36 @@ function App() {
                 />
               </div>
 
-              <div className="relative mx-auto max-w-4xl text-center">
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/90 px-3 py-1 text-sm text-neutral-600">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                  {language === 'en' ? 'Researcher-focused archive' : '연구자 중심 데이터 아카이브'}
-                </div>
-
                 <h1 className="mx-auto max-w-3xl text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl lg:text-6xl">
-                  {language === 'en'
-                    ? 'Find open crime and delinquency data across countries.'
-                    : '세계 각국의 범죄·비행 데이터를 한 곳에 모아둔 범죄 데이터 아카이브'}
+                  {language === 'en' ? (
+                    <>
+                      Find open crime and delinquency data
+                      <br />
+                      across countries.
+                    </>
+                  ) : (
+                    <>
+                      세계 각국의 범죄·비행 데이터를
+                      <br />
+                      한 곳에 모아둔 범죄 데이터 아카이브
+                    </>
+                  )}
                 </h1>
+                
                 <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-600 sm:text-lg">
-                  {language === 'en'
-                    ? 'A bilingual directory designed for researchers, policymakers, and public-sector professionals who need fast access to adult and youth crime-related datasets.'
-                    : '전세계의 범죄, 청소년 비행, 형사사법 관련 공개 데이터를 빠르게 찾아볼 수 있도록 모아둔 데이터 아카이브입니다.'}
+                  {language === 'en' ? (
+                    <>
+                      A bilingual directory designed for researchers, policymakers, and public-sector professionals
+                      <br />
+                      who need fast access to adult and youth crime-related datasets.
+                    </>
+                  ) : (
+                    <>
+                      전세계의 범죄, 청소년 비행, 형사사법 관련 공개 데이터를
+                      <br />
+                      빠르게 찾아볼 수 있도록 모아둔 데이터 아카이브입니다.
+                    </>
+                  )}
                 </p>
 
                 <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
