@@ -220,7 +220,9 @@ function App() {
                 <h1 className="mx-auto max-w-3xl text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl lg:text-6xl">
                   {language === 'en'
                     ? 'Find open crime and delinquency data across countries.'
-                    : '세계 각국의 범죄·비행 데이터를 한 곳에 모아둔 범죄 데이터 아카이브'}
+                    : '세계 각국의 범죄·비행 데이터를
+                      <br />
+                      한 곳에 모아둔 범죄 데이터 아카이브'}
                 </h1>
                 <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-600 sm:text-lg">
                   {language === 'en'
@@ -410,6 +412,14 @@ function App() {
               </div>
             </section>
           </main>
+          <footer className="border-t border-black/10 px-6 py-8 text-center text-sm text-neutral-500 lg:px-8">
+            <p>
+              Curated by <span className="font-medium text-neutral-700">Dain Jo</span> · Crime Psychology / Criminology Researcher
+            </p>
+            <p className="mt-2">
+              Global Crime Data Archive is a research-based side project for improving access to open crime and delinquency data.
+            </p>
+          </footer>
         </div>
       </div>
     </div>
