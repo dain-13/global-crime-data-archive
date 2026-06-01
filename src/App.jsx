@@ -220,12 +220,12 @@ function App() {
                 <h1 className="mx-auto max-w-3xl text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl lg:text-6xl">
                   {language === 'en'
                     ? 'Find open crime and delinquency data across countries.'
-                    : '세계 각국의 범죄·비행 데이터를 한 곳에서 찾으세요.'}
+                    : '세계 각국의 범죄·비행 데이터를 한 곳에 모아둔 범죄 데이터 아카이브'}
                 </h1>
                 <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-600 sm:text-lg">
                   {language === 'en'
                     ? 'A bilingual directory designed for researchers, policymakers, and public-sector professionals who need fast access to adult and youth crime-related datasets.'
-                    : '성인 및 아동·청소년 범죄, 비행, 피해, 형사사법 관련 공개 데이터를 빠르게 찾기 위한 이중언어 디렉토리입니다.'}
+                    : '성인 및 아동·청소년 범죄, 비행, 피해, 형사사법 관련 공개 데이터를 빠르게 찾아볼 수 있도록 모아둔 데이터 아카이브입니다.'}
                 </p>
 
                 <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
