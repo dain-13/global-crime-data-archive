@@ -112,6 +112,8 @@ function App() {
   const [design, setDesign] = useState('All')
   const [dataType, setDataType] = useState('All')
   const [access, setAccess] = useState('All')
+  const [showAll, setShowAll] = useState(false)
+  const INITIAL_VISIBLE_COUNT = 12
 
   const countries = useMemo(() => {
     return uniqueValues(datasets, 'country_en').sort((a, b) => a.localeCompare(b))
@@ -160,6 +162,12 @@ function App() {
     })
   }, [query, country, population, design, dataType, access])
 
+  const visibleDatasets = showAll
+  ? filteredDatasets
+  : filteredDatasets.slice(0, INITIAL_VISIBLE_COUNT)
+
+  const hasMoreDatasets = filteredDatasets.length > INITIAL_VISIBLE_COUNT
+
   const clearFilters = () => {
     setQuery('')
     setCountry('All')
@@ -167,6 +175,7 @@ function App() {
     setDesign('All')
     setDataType('All')
     setAccess('All')
+    setShowAll(false)
   }
 
   return (
@@ -401,11 +410,30 @@ function App() {
                     No datasets found. Try clearing filters or using a broader keyword.
                   </div>
                 ) : (
-                  <div className="mt-10 grid gap-4 lg:grid-cols-3">
-                    {filteredDatasets.map((dataset) => (
-                      <DatasetCard key={dataset.id} dataset={dataset} language={language} />
-                    ))}
-                  </div>
+                  <>
+                    <div className="mt-10 grid gap-4 lg:grid-cols-3">
+                      {visibleDatasets.map((dataset) => (
+                        <DatasetCard key={dataset.id} dataset={dataset} language={language} />
+                      ))}
+                    </div>
+                    
+                    {hasMoreDatasets && (
+                      <div className="mt-8 flex justify-center">
+                        <button
+                          onClick={() => setShowAll((current) => !current)}
+                          className="rounded-md border border-black/10 bg-white px-5 py-3 text-sm font-medium text-neutral-700 transition hover:border-black/20 hover:text-black"
+                        >
+                          {showAll
+                            ? language === 'en'
+                              ? 'Show less'
+                              : '접기'
+                            : language === 'en'
+                              ? `More datasets (${filteredDatasets.length - INITIAL_VISIBLE_COUNT} more)`
+                              : `더 보기 (${filteredDatasets.length - INITIAL_VISIBLE_COUNT}개 더)`}
+                        </button>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </section>
