@@ -119,16 +119,29 @@ function App() {
     return uniqueValues(datasets, 'country_en').sort((a, b) => a.localeCompare(b))
   }, [])
 
+  const featuredCountryList = [
+    { code: 'KR', name_en: 'South Korea', name_ko: '대한민국' },
+    { code: 'US', name_en: 'United States', name_ko: '미국' },
+    { code: 'UK', name_en: 'United Kingdom', name_ko: '영국' },
+    { code: 'DE', name_en: 'Germany', name_ko: '독일' },
+    { code: 'CA', name_en: 'Canada', name_ko: '캐나다' },
+    { code: 'INT', name_en: 'International', name_ko: '국제' },
+  ]
+  
   const featuredCountries = useMemo(() => {
-    return countries.slice(0, 6).map((countryName) => {
-      const countryDatasets = datasets.filter((dataset) => dataset.country_en === countryName)
+    return featuredCountryList.map((countryItem) => {
+      const countryDatasets = datasets.filter(
+        (dataset) => dataset.country_en === countryItem.name_en
+      )
+  
       return {
-        code: countryDatasets[0]?.countryCode || countryName.slice(0, 2).toUpperCase(),
-        name: countryName,
+        code: countryItem.code,
+        name: language === 'en' ? countryItem.name_en : countryItem.name_ko,
+        value: countryItem.name_en,
         count: `${countryDatasets.length} sources`,
       }
     })
-  }, [countries])
+  }, [language])
 
   const filteredDatasets = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase()
@@ -264,9 +277,9 @@ function App() {
                 <div className="mt-10 grid gap-4 md:grid-cols-3">
                   {featuredCountries.map((item) => (
                     <button
-                      key={item.name}
+                      key={item.value}
                       onClick={() => {
-                        setCountry(item.name)
+                        setCountry(item.value)
                         document.getElementById('sources')?.scrollIntoView({ behavior: 'smooth' })
                       }}
                       className="rounded-2xl border border-black/10 bg-white p-6 text-left transition hover:-translate-y-0.5 hover:border-black/20"
