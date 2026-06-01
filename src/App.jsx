@@ -220,9 +220,7 @@ function App() {
                 <h1 className="mx-auto max-w-3xl text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl lg:text-6xl">
                   {language === 'en'
                     ? 'Find open crime and delinquency data across countries.'
-                    : '세계 각국의 범죄·비행 데이터를
-                      <br />
-                      한 곳에 모아둔 범죄 데이터 아카이브'}
+                    : '세계 각국의 범죄·비행 데이터를 한 곳에 모아둔 범죄 데이터 아카이브'}
                 </h1>
                 <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-600 sm:text-lg">
                   {language === 'en'
