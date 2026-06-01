@@ -440,7 +440,7 @@ function App() {
           </main>
           <footer className="border-t border-black/10 px-6 py-8 text-center text-sm text-neutral-500 lg:px-8">
             <p>
-              Curated by <span className="font-medium text-neutral-700">Dain Jo</span> · Crime Psychology / Criminology Researcher
+              Curated by <span className="font-medium text-neutral-700">Dain Cho</span> · Forensic Psychology / Criminology Researcher
             </p>
             <p className="mt-2">
               Global Crime Data Archive is a research-based side project for improving access to open crime and delinquency data.
