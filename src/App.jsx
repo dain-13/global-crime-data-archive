@@ -317,7 +317,7 @@ function App() {
                       {features.map((feature) => (
                         <div
                           key={feature.title_en}
-                          className="rounded-2xl border border-black/10 bg-white p-5"
+                          className="rounded-2xl border border-black/5 bg-[#f7f0e3] p-5"
                         >
                           <h3 className="text-base font-semibold tracking-tight">
                             {language === 'en' ? feature.title_en : feature.title_ko}
@@ -330,7 +330,7 @@ function App() {
                     </div>
                   </div>
 
-                  <div className="rounded-3xl border border-black/10 bg-[#111111] p-6 text-white shadow-[0_12px_40px_rgba(0,0,0,0.16)]">
+                  <div className="rounded-3xl border border-white/10 bg-[#0f2f24] p-6 text-white shadow-[0_12px_40px_rgba(0,0,0,0.16)]">
                     <div className="flex items-center justify-between border-b border-white/10 pb-4">
                       <div>
                         <div className="text-sm text-white/60">Filter panel</div>
