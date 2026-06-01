@@ -315,9 +315,16 @@ function App() {
 
                     <div className="mt-8 grid gap-4 sm:grid-cols-2">
                       {features.map((feature) => (
-                        <div key={feature.title} className="rounded-2xl border border-black/10 bg-white p-5">
-                          <h3 className="text-base font-semibold tracking-tight">{feature.title}</h3>
-                          <p className="mt-2 text-sm leading-6 text-neutral-600">{feature.desc}</p>
+                        <div
+                          key={feature.title_en}
+                          className="rounded-2xl border border-black/10 bg-white p-5"
+                        >
+                          <h3 className="text-base font-semibold tracking-tight">
+                            {language === 'en' ? feature.title_en : feature.title_ko}
+                          </h3>
+                          <p className="mt-2 text-sm leading-6 text-neutral-600">
+                            {language === 'en' ? feature.desc_en : feature.desc_ko}
+                          </p>
                         </div>
                       ))}
                     </div>
