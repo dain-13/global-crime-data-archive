@@ -221,7 +221,10 @@ function App() {
           </header>
 
           <main>
-            <section id="about" className="relative overflow-hidden border-b border-black/10 px-6 py-20 lg:px-8 lg:py-28">
+            <section
+              id="about"
+              className="relative overflow-hidden border-b border-black/10 px-6 py-20 lg:px-8 lg:py-28"
+            >
               <div className="absolute inset-0 opacity-50" aria-hidden="true">
                 <div
                   className="h-full w-full"
@@ -232,6 +235,14 @@ function App() {
                   }}
                 />
               </div>
+
+              <div className="relative mx-auto max-w-4xl text-center">
+                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/90 px-3 py-1 text-sm text-neutral-600">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                  {language === 'en'
+                    ? 'Researcher-focused archive'
+                    : '연구자 중심 데이터 아카이브'}
+                </div>
 
                 <h1 className="mx-auto max-w-3xl text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl lg:text-6xl">
                   {language === 'en' ? (
@@ -248,7 +259,7 @@ function App() {
                     </>
                   )}
                 </h1>
-                
+
                 <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-600 sm:text-lg">
                   {language === 'en' ? (
                     <>
@@ -266,10 +277,17 @@ function App() {
                 </p>
 
                 <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                  <a href="#sources" className="min-w-[150px] rounded-md bg-black px-5 py-3 text-center text-sm font-medium text-white transition hover:opacity-90">
+                  <a
+                    href="#sources"
+                    className="min-w-[150px] rounded-md bg-black px-5 py-3 text-center text-sm font-medium text-white transition hover:opacity-90"
+                  >
                     {language === 'en' ? 'Browse datasets' : '데이터 둘러보기'}
                   </a>
-                  <a href="#filters" className="min-w-[150px] rounded-md border border-black/10 bg-white px-5 py-3 text-center text-sm font-medium text-neutral-700 transition hover:border-black/20 hover:text-black">
+
+                  <a
+                    href="#filters"
+                    className="min-w-[150px] rounded-md border border-black/10 bg-white px-5 py-3 text-center text-sm font-medium text-neutral-700 transition hover:border-black/20 hover:text-black"
+                  >
                     {language === 'en' ? 'Use filters' : '필터 사용하기'}
                   </a>
                 </div>
