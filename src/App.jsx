@@ -225,7 +225,7 @@ function App() {
                 <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-600 sm:text-lg">
                   {language === 'en'
                     ? 'A bilingual directory designed for researchers, policymakers, and public-sector professionals who need fast access to adult and youth crime-related datasets.'
-                    : '성인 및 아동·청소년 범죄, 비행, 피해, 형사사법 관련 공개 데이터를 빠르게 찾아볼 수 있도록 모아둔 데이터 아카이브입니다.'}
+                    : '전세계의 범죄, 청소년 비행, 형사사법 관련 공개 데이터를 빠르게 찾아볼 수 있도록 모아둔 데이터 아카이브입니다.'}
                 </p>
 
                 <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -288,7 +288,7 @@ function App() {
                     <p className="mt-4 max-w-2xl text-sm leading-6 text-neutral-600 sm:text-base">
                       {language === 'en'
                         ? 'Filter the archive by country, population, research design, data type, and access level.'
-                        : '국가, 대상, 자료설계, 데이터 유형, 접근방식으로 아카이브를 좁혀볼 수 있습니다.'}
+                        : '국가, 대상, 자료설계, 데이터 유형 등을 기준으로 검색할 수 있습니다.'}
                     </p>
 
                     <div className="mt-8 grid gap-4 sm:grid-cols-2">
