@@ -192,7 +192,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#d9d9d9] text-neutral-900">
+    <div className="min-h-screen bg-[#0f2f24] text-neutral-900">
       <div className="mx-auto max-w-[1240px] px-6 py-6 lg:px-10 lg:py-10">
         <div className="overflow-hidden rounded-[28px] border border-black/10 bg-[#f6f6f4] shadow-[0_18px_60px_rgba(0,0,0,0.08)]">
           <header className="border-b border-black/10 px-6 py-5 lg:px-8">
