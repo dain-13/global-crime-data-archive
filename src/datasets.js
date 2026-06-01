@@ -1006,62 +1006,6 @@ export const datasets = [
     "notes_en": "Annual corrections statistics covering prison population, releases, and related correctional administration."
   },
   {
-    "id": "kor-kicj-crime-stat-api",
-    "countryCode": "KR",
-    "country_ko": "대한민국",
-    "country_en": "South Korea",
-    "name_ko": "한국형사법무정책연구원 범죄통계정보조회서비스",
-    "name_en": "KICJ Crime Statistics Information API",
-    "institution_ko": "한국형사법무정책연구원 / 공공데이터포털",
-    "institution_en": "KICJ / Korea Open Data Portal",
-    "link": "https://www.data.go.kr/data/15140047/openapi.do?recommendDataYn=Y",
-    "population": [
-      "Adults",
-      "Youth",
-      "Mixed population"
-    ],
-    "design": [
-      "Administrative",
-      "Repeated cross-sectional"
-    ],
-    "dataType": [
-      "Open API",
-      "Official statistics"
-    ],
-    "access": [
-      "Application required",
-      "Public API"
-    ],
-    "formats": [
-      "JSON",
-      "XML",
-      "API"
-    ],
-    "topics_ko": [
-      "범죄발생",
-      "검거",
-      "범행수법",
-      "피해결과",
-      "피의자특성"
-    ],
-    "topics_en": [
-      "Recorded crime",
-      "Clearance",
-      "Modus operandi",
-      "Victim outcome",
-      "Suspect characteristics"
-    ],
-    "language": [
-      "Korean"
-    ],
-    "scope": "National",
-    "sourceCategory": "government_open_data",
-    "sourceStatus": "verified_official",
-    "lastChecked": "2026-06-01",
-    "notes_ko": "경찰청 범죄통계 책자 기반 통계자료를 조회하는 공공데이터포털 API.",
-    "notes_en": "Korea Open Data Portal API for police crime statistics derived from KNPA crime-statistics volumes."
-  },
-  {
     "id": "usa-fbi-cde",
     "countryCode": "US",
     "country_ko": "미국",
