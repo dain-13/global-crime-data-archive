@@ -9,13 +9,13 @@ export const features = [
     title_en: 'Browse by country',
     title_ko: '국가별 탐색',
     desc_en: 'Start with a country and move directly to official portals, surveys, and justice-related datasets.',
-    desc_ko: '국가를 선택하면 공식 통계, 조사자료, 패널자료, 형사사법 관련 데이터 출처를 바로 확인할 수 있습니다.',
+    desc_ko: '국가를 선택하면 공식 통계, 조사자료, 형사사법 관련 데이터 출처를 바로 확인할 수 있습니다.',
   },
   {
     title_en: 'Research-ready filters',
     title_ko: '연구 목적에 맞춘 필터',
-    desc_en: 'Narrow results by adult, youth, longitudinal, cross-sectional, administrative, and more.',
-    desc_ko: '성인, 아동·청소년, 종단자료, 횡단자료, 행정자료 등 필요한 조건에 맞춰 데이터를 좁혀볼 수 있습니다.',
+    desc_en: 'Narrow results by adult, youth, longitudinal, cross-sectional, and more.',
+    desc_ko: '성인, 아동·청소년, 종단자료, 횡단자료 등 필요한 조건에 맞춰 데이터를 검색할 수 있습니다.',
   },
   {
     title_en: 'Bilingual access',
