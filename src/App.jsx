@@ -1,6 +1,9 @@
 import { exampleSources, featuredCountries, features, quickFilters } from './data'
+import datasets from './datasets'
 
 function App() {
+  const previewDatasets = datasets.slice(0, 6)
+
   return (
     <div className="min-h-screen bg-[#d9d9d9] text-neutral-900">
       <div className="mx-auto max-w-[1240px] px-6 py-6 lg:px-10 lg:py-10">
@@ -167,22 +170,85 @@ function App() {
                 </div>
 
                 <div className="mt-10 grid gap-4 lg:grid-cols-3">
-                  {exampleSources.map((source) => (
-                    <a key={source.title} href={source.href} className="rounded-2xl border border-black/10 bg-white p-6 transition hover:border-black/20">
+                  {previewDatasets.map((dataset) => (
+                    <a
+                      key={dataset.id}
+                      href={dataset.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-2xl border border-black/10 bg-white p-6 transition hover:border-black/20"
+                    >
                       <div className="flex items-center justify-between gap-4">
-                        <span className="text-xs uppercase tracking-[0.18em] text-neutral-400">{source.country}</span>
+                        <span className="text-xs uppercase tracking-[0.18em] text-neutral-400">
+                          {dataset.country_en}
+                        </span>
                         <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs text-neutral-600">
-                          {source.type}
+                          {dataset.design?.[0] || 'Dataset'}
                         </span>
                       </div>
-                      <h3 className="mt-5 text-xl font-semibold tracking-tight">{source.title}</h3>
-                      <p className="mt-3 text-sm leading-6 text-neutral-600">{source.desc}</p>
+                  
+                      <h3 className="mt-5 text-xl font-semibold tracking-tight">
+                        {dataset.name_en}
+                      </h3>
+                  
+                      <p className="mt-3 text-sm leading-6 text-neutral-600">
+                        {dataset.institution_en}
+                      </p>
+                  
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {dataset.population?.slice(0, 2).map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full border border-black/10 px-2.5 py-1 text-xs text-neutral-600"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                        {dataset.dataType?.slice(0, 2).map((tag) => (
+                          <span
+                            key={tag}
+                            className="rounded-full border border-black/10 px-2.5 py-1 text-xs text-neutral-600"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                  
                       <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-4">
-                        <span className="text-sm text-neutral-500">Official link</span>
-                        <span className="text-sm font-medium text-neutral-900">View source →</span>
+                        <span className="text-sm text-neutral-500">
+                          {dataset.access?.[0] || 'Link'}
+                        </span>
+                        <span className="text-sm font-medium text-neutral-900">
+                          View source →
+                        </span>
                       </div>
                     </a>
                   ))}
+                                    {exampleSources.map((source) => (
+                                      <a key={source.title} href={source.href} className="rounded-2xl border border-black/10 bg-white p-6 transition hover:border-black/20">
+                                        <div className="flex items-center justify-between gap-4">
+                                          <span className="text-xs uppercase tracking-[0.18em] text-neutral-400">{source.country}</span>
+                                          <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs text-neutral-600">
+                                            {source.type}
+                                          </span>
+                                        </div>
+                                        <h3 className="mt-5 text-xl font-semibold tracking-tight">{source.title}</h3>
+                                        <p className="mt-3 text-sm leading-6 text-neutral-600">{source.desc}</p>
+                                        <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-4">
+                                          <span className="text-sm text-neutral-500">Official link</span>
+                                          <span className="text-sm font-medium text-neutral-900">View source →</span>
+                                        </div>
+                                      </a>
+                                    ))}
+                                  </div>
+                                </div>
+                              </section>
+                            </main>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
                 </div>
               </div>
             </section>
