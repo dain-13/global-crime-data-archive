@@ -958,7 +958,7 @@ export const datasets = [
     "countryCode": "KR",
     "country_ko": "대한민국",
     "country_en": "South Korea",
-    "name_ko": "법무부 범죄예방정책국 범죄예방통계",
+    "name_ko": "범죄예방정책 통계분석",
     "name_en": "Crime Prevention Statistics by the Crime Prevention Policy Bureau",
     "institution_ko": "법무부 범죄예방정책국",
     "institution_en": "Crime Prevention Policy Bureau, Ministry of Justice",
