@@ -350,7 +350,7 @@ function SnapshotPanel({ title, description, items, maxCount, accent }) {
         <p className="mt-2 text-sm leading-6 text-neutral-500">{description}</p>
       </div>
       <div className="mt-5 space-y-3">
-        {items.slice(0, 6).map((item, index) => (
+        {items.slice(0, 4).map((item, index) => (
           <MetadataBar key={item.name} item={item} maxCount={maxCount} index={index} accent={accent} />
         ))}
       </div>
