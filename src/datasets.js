@@ -901,58 +901,6 @@ export const datasets = [
     "notes_en": "KOSIS topic page aggregating Korean crime and safety statistics tables."
   },
   {
-    "id": "kor-kosis-national-crime-arrest",
-    "countryCode": "KR",
-    "country_ko": "대한민국",
-    "country_en": "South Korea",
-    "name_ko": "범죄 발생 및 검거 현황(전국)",
-    "name_en": "Crime Occurrence and Arrest Status, National",
-    "institution_ko": "통계청 KOSIS / 경찰청",
-    "institution_en": "KOSIS / Korean National Police Agency",
-    "link": "https://kosis.kr/statHtml/statHtml.do?orgId=132&tblId=DT_13204_2011_211",
-    "population": [
-      "Adults",
-      "Youth",
-      "Mixed population"
-    ],
-    "design": [
-      "Administrative",
-      "Repeated cross-sectional"
-    ],
-    "dataType": [
-      "Official statistics",
-      "Web table"
-    ],
-    "access": [
-      "Public"
-    ],
-    "formats": [
-      "Web tables",
-      "CSV/XLS downloads"
-    ],
-    "topics_ko": [
-      "범죄발생",
-      "검거",
-      "죄종별",
-      "경찰청범죄통계"
-    ],
-    "topics_en": [
-      "Recorded crime",
-      "Arrest/clearance",
-      "Crime type",
-      "Police statistics"
-    ],
-    "language": [
-      "Korean"
-    ],
-    "scope": "National",
-    "sourceCategory": "government",
-    "sourceStatus": "verified_official",
-    "lastChecked": "2026-06-01",
-    "notes_ko": "KOSIS에서 제공하는 경찰청 범죄 발생 및 검거 현황 통계표.",
-    "notes_en": "KOSIS table for national crime occurrence and arrest/clearance statistics."
-  },
-  {
     "id": "kor-corrections-yearbook",
     "countryCode": "KR",
     "country_ko": "대한민국",
