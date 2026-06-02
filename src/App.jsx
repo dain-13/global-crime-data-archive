@@ -388,7 +388,7 @@ const DATA_LANDSCAPES = {
           },
           {
             name_en: 'CDC, SAMHSA, NIH and BLS',
-            name_ko: 'CDC, SAMHSA, NIH, 노동통계국',
+            name_ko: 'CDC, SAMHSA, NIH and BLS',
             description_en: 'Official health, substance-use, development, and longitudinal data that can support crime-related risk-factor research.',
             description_ko: '범죄 관련 위험요인 연구에 활용할 수 있는 보건, 물질사용, 발달, 종단자료를 제공합니다.',
             sources: [
