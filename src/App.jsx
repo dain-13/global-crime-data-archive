@@ -925,7 +925,7 @@ function App() {
                           onKeyDown={(event) => {
                             if (event.key === 'Enter') applyFilters()
                           }}
-                          placeholder="crime, youth, panel, criminal justice"
+                          placeholder="crime, youth, panel, criminal justice ..."
                           className="w-full rounded-xl border border-white/10 bg-white px-4 py-3 text-sm text-neutral-900 outline-none"
                         />
                       </label>
