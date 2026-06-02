@@ -165,7 +165,7 @@ function GlobeVisual({ language, mapCountries, onCountrySelect }) {
       <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <div className="text-sm text-white/60">
-            {language === 'en' ? 'Interactive country pins' : '클릭 가능한 국가 핀'}
+            {language === 'en' ? 'Interactive country pins' : '데이터 지도'}
           </div>
           <h3 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
             {language === 'en' ? 'Explore the archive from the map.' : '지도에서 데이터 출처를 탐색해보세요.'}
@@ -173,7 +173,7 @@ function GlobeVisual({ language, mapCountries, onCountrySelect }) {
           <p className="mt-3 max-w-2xl text-sm leading-6 text-white/70">
             {language === 'en'
               ? 'Click a pin to filter the catalogue by country. The four cards above are quick entry points, while the map shows more available regions.'
-              : '핀을 클릭하면 해당 국가 데이터로 바로 이동합니다. 위의 4개 카드는 대표 진입점이고, 지도에는 더 많은 국가 핀이 표시됩니다.'}
+              : '핀을 클릭하면 해당 국가 데이터로 바로 이동합니다.'}
           </p>
         </div>
 
