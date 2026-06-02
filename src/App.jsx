@@ -296,7 +296,7 @@ function DonutChart({ items, total, language }) {
           </p>
 
           <div className="mt-5 grid gap-2">
-            {items.slice(0, 6).map((item, index) => (
+            {items.slice(0, 4).map((item, index) => (
               <div key={item.name} className="flex items-center justify-between gap-3 text-sm">
                 <div className="flex min-w-0 items-center gap-2">
                   <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: palette[index % palette.length] }} />
