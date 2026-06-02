@@ -1465,7 +1465,7 @@ function App() {
                   {language === 'en' ? 'Countries' : '국가별 탐색'}
                 </a>
                 <a href="#landscape" className="transition hover:text-black">
-                  {language === 'en' ? 'Landscape' : '기관별 탐색'}
+                  {language === 'en' ? 'Institutions' : '기관별 탐색'}
                 </a>
                 <a href="#snapshot" className="transition hover:text-black">
                   {language === 'en' ? 'Snapshot' : '현황'}
