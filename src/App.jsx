@@ -205,7 +205,7 @@ const DATA_LANDSCAPES = {
         title_en: 'Official sources',
         title_ko: '공식자료',
         description_en: 'Government, court, police, prosecution, corrections, and national statistical sources.',
-        description_ko: '정부부처, 법원, 경찰, 검찰, 교정, 국가통계 체계에서 제공하는 공식 통계·행정자료입니다.',
+        description_ko: '정부부처 등 국가통계에서 제공하는 공식 통계·행정자료입니다.',
         institutions: [
           {
             name_en: 'Korean National Police Agency',
