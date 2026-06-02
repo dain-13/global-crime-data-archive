@@ -649,9 +649,6 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
                       {language === 'en' ? group.description_en : group.description_ko}
                     </p>
                   </div>
-                  <span className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs text-neutral-500">
-                    {group.institutions.length} {language === 'en' ? 'institutions' : '기관'}
-                  </span>
                 </div>
 
                 <div className="mt-5 space-y-4">
