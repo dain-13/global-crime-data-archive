@@ -31,13 +31,13 @@ export const features = [
   },
 ]
 
-export const quickFilters = [
-  'Crime & delinquency',
-  'Criminal justice',
-  'Addiction & substance use',
-  'Mental health',
-  'Problem behavior'
-]
+# export const quickFilters = [
+#  'Crime & delinquency',
+#  'Criminal justice',
+#  'Addiction & substance use',
+#  'Mental health',
+#  'Problem behavior'
+# ]
 
 export const exampleSources = [
   {
