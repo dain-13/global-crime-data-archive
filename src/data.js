@@ -36,10 +36,7 @@ export const quickFilters = [
   'Criminal justice',
   'Addiction & substance use',
   'Mental health',
-  'Problem behavior',
-  'Youth',
-  'Longitudinal',
-  'Public',
+  'Problem behavior'
 ]
 
 export const exampleSources = [
