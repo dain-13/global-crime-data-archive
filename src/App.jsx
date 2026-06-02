@@ -1447,7 +1447,7 @@ function App() {
           <header className="sticky top-0 z-50 rounded-t-[28px] border-b border-black/10 bg-[#f7f0e3]/95 px-6 py-5 backdrop-blur lg:px-8">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex items-center gap-3">
-                <div className="h-3 w-3 rotate-45 bg-black" />
+                <div className="h-3 w-3 rotate-45 bg-[#0f2f24]" />
                 <div>
                   <div className="text-[15px] font-semibold tracking-tight">Global Crime Data Archive</div>
                   <div className="text-xs text-neutral-500">Crime, justice, and related research data discovery</div>
@@ -1550,7 +1550,7 @@ function App() {
                 <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
                   <a
                     href="#filters"
-                    className="min-w-[150px] rounded-md bg-black px-5 py-3 text-center text-sm font-medium text-white transition hover:opacity-90"
+                    className="min-w-[150px] rounded-md bg-[#0f2f24] px-5 py-3 text-center text-sm font-medium text-white transition hover:bg-[#143d2f]"
                   >
                     {language === 'en' ? 'Search datasets' : '데이터 검색하기'}
                   </a>
@@ -1560,6 +1560,13 @@ function App() {
                     className="min-w-[150px] rounded-md border border-black/10 bg-white px-5 py-3 text-center text-sm font-medium text-neutral-700 transition hover:border-black/20 hover:text-black"
                   >
                     {language === 'en' ? 'Browse by country' : '국가별로 보기'}
+                  </a>
+                  
+                  <a
+                    href="#landscape"
+                    className="min-w-[150px] rounded-md border border-black/10 bg-white px-5 py-3 text-center text-sm font-medium text-neutral-700 transition hover:border-black/20 hover:text-black"
+                  >
+                    {language === 'en' ? 'Browse by institution' : '기관별 보기'}
                   </a>
 
                   <a
