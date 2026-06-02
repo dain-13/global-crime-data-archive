@@ -31,8 +31,7 @@ export const datasets = [
       "Research data"
     ],
     "access": [
-      "Mixed",
-      "Check source"
+      "Mixed"
     ],
     "formats": [
       "SAV",
@@ -92,8 +91,7 @@ export const datasets = [
       "Survey"
     ],
     "access": [
-      "Public",
-      "Check source"
+      "Public"
     ],
     "formats": [
       "Questionnaire",
@@ -151,8 +149,7 @@ export const datasets = [
       "Survey"
     ],
     "access": [
-      "Public",
-      "Check source"
+      "Public"
     ],
     "formats": [
       "Data file",
@@ -211,8 +208,7 @@ export const datasets = [
       "Survey"
     ],
     "access": [
-      "Public",
-      "Check source"
+      "Public"
     ],
     "formats": [
       "Data file",
@@ -270,8 +266,7 @@ export const datasets = [
       "Survey"
     ],
     "access": [
-      "Public",
-      "Check source"
+      "Public"
     ],
     "formats": [
       "Data file",
@@ -328,8 +323,7 @@ export const datasets = [
       "Survey"
     ],
     "access": [
-      "Public",
-      "Check source"
+      "Public"
     ],
     "formats": [
       "Data file",
@@ -387,8 +381,7 @@ export const datasets = [
       "Survey"
     ],
     "access": [
-      "Public",
-      "Check source"
+      "Public"
     ],
     "formats": [
       "Data file",
@@ -622,8 +615,7 @@ export const datasets = [
       "Report"
     ],
     "access": [
-      "Public",
-      "Check source"
+      "Public"
     ],
     "formats": [
       "PDF",
@@ -746,9 +738,7 @@ export const datasets = [
       "Victimization survey"
     ],
     "access": [
-      "Public",
-      "Registration required",
-      "Check source"
+      "Public"
     ],
     "formats": [
       "SAV",
@@ -4431,7 +4421,7 @@ export const datasets = [
     "name_en": "Korea Youth Risk Behavior Survey (KYRBS)",
     "institution_ko": "질병관리청·교육부",
     "institution_en": "Korea Disease Control and Prevention Agency / Ministry of Education",
-    "link": "https://www.kdca.go.kr/yhs/",
+    "link": "https://www.kdca.go.kr/yhs/home.jsp?id=m03_01",
     "population": [
       "Youth"
     ],
@@ -4446,8 +4436,7 @@ export const datasets = [
       "Microdata"
     ],
     "access": [
-      "Public",
-      "Check source"
+      "Public"
     ],
     "formats": [
       "Raw data",
