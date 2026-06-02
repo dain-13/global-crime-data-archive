@@ -591,7 +591,7 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
             <p className="mt-4 max-w-2xl text-sm leading-6 text-neutral-600 sm:text-base">
               {language === 'en'
                 ? 'Click an institution to view all sources connected to it, or click a specific source to narrow the dataset list to that source only.'
-                : '기관명을 누르면 해당 기관의 데이터가 아래 목록에 모두 표시되고, 개별 자료명을 누르면 그 자료만 표시됩니다.'}
+                : '기관명을 누르면 해당 기관의 데이터가 데이터 출처에 표시되고, 개별 자료명을 누르면 그 자료만 표시됩니다.'}
             </p>
           </div>
 
@@ -1465,7 +1465,7 @@ function App() {
                   {language === 'en' ? 'Countries' : '국가별 탐색'}
                 </a>
                 <a href="#landscape" className="transition hover:text-black">
-                  {language === 'en' ? 'Landscape' : '구조도'}
+                  {language === 'en' ? 'Landscape' : '기관별 탐색'}
                 </a>
                 <a href="#snapshot" className="transition hover:text-black">
                   {language === 'en' ? 'Snapshot' : '현황'}
