@@ -841,7 +841,11 @@ function App() {
                         <div className="rounded-full bg-neutral-100 px-3 py-1 text-xs text-neutral-600">{item.count}</div>
                       </div>
                       <p className="mt-6 text-sm leading-6 text-neutral-600">
-                        {language === 'en' ? `Explore curated sources for ${item.name}.` : `${item.name} 관련 데이터 출처 보기`}
+                       {language === 'en'
+                        ? item.value === '__INTERNATIONAL__'
+                          ? 'Explore curated international sources.'
+                          : `Explore curated sources for ${item.name}.`
+                        : `${item.name} 관련 데이터 출처 보기`}
                       </p>
                     </button>
                   ))}
