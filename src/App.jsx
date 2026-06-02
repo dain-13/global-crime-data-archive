@@ -282,7 +282,7 @@ const DATA_LANDSCAPES = {
         title_en: 'Research and non-ministerial sources',
         title_ko: '비공식·연구자료',
         description_en: 'Survey, panel, and microdata sources produced or curated by research institutes, public agencies, and data services outside direct ministerial statistics.',
-        description_ko: '정부부처의 공식 행정통계가 아니라, 연구기관·공공기관·마이크로데이터 서비스에서 조사·제공하는 연구용 자료입니다.',
+        description_ko: '연구기관·공공기관·마이크로데이터 서비스에서 조사·제공하는 연구용 자료입니다.',
         institutions: [
           {
             name_en: 'Korean Institute of Criminology and Justice',
