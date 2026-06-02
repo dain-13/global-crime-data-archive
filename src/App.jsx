@@ -281,25 +281,10 @@ function DatasetCard({ dataset, language }) {
       </div>
 
       {(designSummary || dataTypeSummary) && (
-        <div className="mt-4 space-y-1 text-xs leading-5 text-neutral-500">
-          {designSummary && (
-            <p>
-              <span className="font-medium text-neutral-600">
-                {language === 'en' ? 'Design' : '자료설계'}
-              </span>
-              <span className="mx-1 text-neutral-300">·</span>
-              {designSummary}
-            </p>
-          )}
-          {dataTypeSummary && (
-            <p>
-              <span className="font-medium text-neutral-600">
-                {language === 'en' ? 'Data type' : '데이터 유형'}
-              </span>
-              <span className="mx-1 text-neutral-300">·</span>
-              {dataTypeSummary}
-            </p>
-          )}
+        <div className="mt-4 text-xs leading-5 text-neutral-500">
+          {[...designValues.slice(0, 1), ...dataTypeValues.slice(0, 2)]
+            .filter(Boolean)
+            .join(' · ')}
         </div>
       )}
 
