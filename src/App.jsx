@@ -880,8 +880,8 @@ function App() {
                     </h2>
                     <p className="mt-4 max-w-2xl text-sm leading-6 text-neutral-600 sm:text-base">
                       {language === 'en'
-                        ? 'Search crime and criminal justice datasets first, while also exploring related sources for addiction, mental health, developmental criminology, problem behavior, and neurophysiology research.'
-                        : '범죄·형사사법 자료를 중심으로, 중독, 정신건강, 발달범죄학, 문제행동, 신경생리 연구에 활용할 수 있는 관련 자료까지 함께 검색할 수 있습니다.'}
+                        ? 'Search crime-related datasets and related sources for criminal justice, addiction, mental health, and problem behavior research.'
+                        : '범죄 관련 데이터를 중심으로, 형사사법, 중독·물질사용, 정신건강, 문제행동 연구에 활용할 수 있는 자료를 함께 검색할 수 있습니다.'}
                     </p>
 
                     <div className="mt-8 grid gap-4 sm:grid-cols-2">
