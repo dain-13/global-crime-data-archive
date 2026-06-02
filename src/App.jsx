@@ -282,9 +282,7 @@ function DatasetCard({ dataset, language }) {
 
       {(designSummary || dataTypeSummary) && (
         <div className="mt-4 text-xs leading-5 text-neutral-500">
-          {[...designValues.slice(0, 1), ...dataTypeValues.slice(0, 2)]
-            .filter(Boolean)
-            .join(' · ')}
+          {[designSummary, dataTypeSummary].filter(Boolean).join(' · ')}
         </div>
       )}
 
