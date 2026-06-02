@@ -144,15 +144,15 @@ function GlobeVisual({ language }) {
 
       <div className="relative">
         <div className="text-sm text-white/60">
-          {language === 'en' ? 'Data map concept' : '데이터 지도 컨셉'}
+          {language === 'en' ? 'Data map concept' : '국가 지도'}
         </div>
         <h3 className="mt-2 text-2xl font-semibold tracking-tight">
-          {language === 'en' ? 'A map for finding sources, not comparing countries.' : '국가를 비교하는 대신, 데이터를 찾기 위한 지도입니다.'}
+          {language === 'en' ? 'A map for finding sources, not comparing countries.' : '국가별 데이터를 찾기 위한 지도입니다.'}
         </h3>
         <p className="mt-3 max-w-md text-sm leading-6 text-white/70">
           {language === 'en'
-            ? 'Use the country cards to move quickly to official crime, delinquency, victimization, and justice-related data sources.'
-            : '국가 카드를 선택하면 범죄, 비행, 피해, 형사사법 관련 공식 데이터 출처를 빠르게 확인할 수 있습니다.'}
+            ? 'Use the country cards to move quickly to crime, delinquency, and justice-related data.'
+            : '국가 카드를 선택하면 국가별 범죄, 비행, 형사사법 관련 데이터를 빠르게 확인할 수 있습니다.'}
         </p>
 
         <div className="mt-8 flex justify-center">
