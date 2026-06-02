@@ -954,6 +954,68 @@ export const datasets = [
     "notes_en": "Annual corrections statistics covering prison population, releases, and related correctional administration."
   },
   {
+    "id": "kor-moj-cppb-crime-prevention-statistics",
+    "countryCode": "KR",
+    "country_ko": "대한민국",
+    "country_en": "South Korea",
+    "name_ko": "법무부 범죄예방정책국 범죄예방통계",
+    "name_en": "Crime Prevention Statistics by the Crime Prevention Policy Bureau",
+    "institution_ko": "법무부 범죄예방정책국",
+    "institution_en": "Crime Prevention Policy Bureau, Ministry of Justice",
+    "link": "https://www.cppb.go.kr/moj/213/subview.do",
+    "population": [
+      "Adults",
+      "Youth",
+      "Mixed population"
+    ],
+    "design": [
+      "Administrative data",
+      "Repeated cross-sectional"
+    ],
+    "dataType": [
+      "Official statistics",
+      "Report"
+    ],
+    "access": [
+      "Public"
+    ],
+    "formats": [
+      "Web page",
+      "Report",
+      "Tables",
+      "PDF"
+    ],
+    "topics_ko": [
+      "범죄예방",
+      "보호관찰",
+      "소년보호",
+      "전자감독",
+      "사회봉사",
+      "수강명령",
+      "형사사법",
+      "공식통계"
+    ],
+    "topics_en": [
+      "Crime prevention",
+      "Probation",
+      "Juvenile protection",
+      "Electronic monitoring",
+      "Community service",
+      "Treatment orders",
+      "Criminal justice",
+      "Official statistics"
+    ],
+    "language": [
+      "Korean"
+    ],
+    "scope": "National",
+    "sourceCategory": "government",
+    "sourceStatus": "user_provided",
+    "lastChecked": "2026-06-02",
+    "notes_ko": "법무부 범죄예방정책국에서 제공하는 범죄예방 분야 공식 통계 자료. 보호관찰, 소년보호, 전자감독 등 성인 및 청소년 대상 범죄예방정책 관련 통계를 확인할 수 있음.",
+    "notes_en": "Official crime prevention statistics provided by the Crime Prevention Policy Bureau of the Ministry of Justice. Includes crime prevention policy statistics related to probation, juvenile protection, electronic monitoring, and related justice interventions."
+  },
+  {
     "id": "usa-fbi-cde",
     "countryCode": "US",
     "country_ko": "미국",
