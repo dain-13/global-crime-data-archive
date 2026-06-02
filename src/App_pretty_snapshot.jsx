@@ -1,0 +1,789 @@
+import { useMemo, useState } from 'react'
+import { features, quickFilters } from './data'
+import datasets from './datasets'
+
+const FILTERS = {
+  population: ['Adults', 'Youth', 'Children', 'Women', 'Mixed population'],
+  design: ['Longitudinal', 'Cross-sectional', 'Repeated cross-sectional', 'Administrative data', 'Panel'],
+  dataType: ['Official statistics', 'Survey', 'Panel data', 'Administrative records', 'Microdata', 'Dashboard', 'API', 'Victimization survey'],
+  access: ['Public', 'Application required', 'Registration required', 'View-only', 'Restricted versions available'],
+}
+
+const INITIAL_FILTERS = {
+  query: '',
+  country: 'All',
+  population: 'All',
+  design: 'All',
+  dataType: 'All',
+  access: 'All',
+}
+
+const FEATURED_COUNTRY_LIST = [
+  { code: 'KR', name_en: 'South Korea', name_ko: '대한민국', value: 'South Korea' },
+  { code: 'US', name_en: 'United States', name_ko: '미국', value: 'United States' },
+  { code: 'UK', name_en: 'United Kingdom', name_ko: '영국', value: 'United Kingdom' },
+  { code: 'DE', name_en: 'Germany', name_ko: '독일', value: 'Germany' },
+  { code: 'CA', name_en: 'Canada', name_ko: '캐나다', value: 'Canada' },
+  { code: 'INT', name_en: 'International', name_ko: '국제', value: '__INTERNATIONAL__' },
+]
+
+function uniqueValues(items, key) {
+  return Array.from(
+    new Set(
+      items.flatMap((item) => {
+        const value = item[key]
+        if (!value) return []
+        return Array.isArray(value) ? value : [value]
+      }),
+    ),
+  ).filter(Boolean)
+}
+
+function matchesArrayFilter(itemValue, selectedValue) {
+  if (!selectedValue || selectedValue === 'All') return true
+  if (!itemValue) return false
+  const values = Array.isArray(itemValue) ? itemValue : [itemValue]
+  return values.some((value) => String(value).toLowerCase() === selectedValue.toLowerCase())
+}
+
+function matchesCountry(dataset, selectedCountry) {
+  if (!selectedCountry || selectedCountry === 'All') return true
+
+  if (selectedCountry === '__INTERNATIONAL__') {
+    return (
+      dataset.country_en === 'International' ||
+      dataset.country_en === 'European Union' ||
+      dataset.countryCode === 'INTL' ||
+      dataset.countryCode === 'EU'
+    )
+  }
+
+  return dataset.country_en === selectedCountry
+}
+
+function countBy(items, getter) {
+  const counts = new Map()
+
+  items.forEach((item) => {
+    const values = getter(item)
+    const normalizedValues = Array.isArray(values) ? values : [values]
+
+    normalizedValues.filter(Boolean).forEach((value) => {
+      counts.set(value, (counts.get(value) || 0) + 1)
+    })
+  })
+
+  return Array.from(counts.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count)
+}
+
+function DatasetCard({ dataset, language }) {
+  const name = language === 'ko' ? dataset.name_ko || dataset.name_en : dataset.name_en || dataset.name_ko
+  const institution = language === 'ko'
+    ? dataset.institution_ko || dataset.institution_en
+    : dataset.institution_en || dataset.institution_ko
+  const country = language === 'ko' ? dataset.country_ko || dataset.country_en : dataset.country_en || dataset.country_ko
+  const topics = language === 'ko' ? dataset.topics_ko || dataset.topics_en : dataset.topics_en || dataset.topics_ko
+
+  return (
+    <a
+      href={dataset.link}
+      target="_blank"
+      rel="noreferrer"
+      className="group rounded-2xl border border-black/10 bg-white p-6 transition hover:-translate-y-0.5 hover:border-black/20 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+    >
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <div className="text-xs uppercase tracking-[0.18em] text-neutral-400">{dataset.countryCode ? dataset.countryCode : country}</div>
+          <div className="mt-1 text-sm font-medium text-neutral-500">{country}</div>
+        </div>
+        <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs text-neutral-600">
+          {dataset.design?.[0] || 'Dataset'}
+        </span>
+      </div>
+
+      <h3 className="mt-5 text-xl font-semibold tracking-tight text-neutral-950 group-hover:underline">
+        {name}
+      </h3>
+
+      <p className="mt-3 text-sm leading-6 text-neutral-600">{institution}</p>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {dataset.population?.slice(0, 2).map((tag) => (
+          <span key={tag} className="rounded-full border border-black/10 px-2.5 py-1 text-xs text-neutral-600">
+            {tag}
+          </span>
+        ))}
+        {dataset.dataType?.slice(0, 2).map((tag) => (
+          <span key={tag} className="rounded-full border border-black/10 px-2.5 py-1 text-xs text-neutral-600">
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      {topics?.length > 0 && (
+        <p className="mt-4 line-clamp-2 text-xs leading-5 text-neutral-500">
+          {topics.slice(0, 5).join(' · ')}
+        </p>
+      )}
+
+      <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-4">
+        <span className="text-sm text-neutral-500">{dataset.access?.[0] || 'Link'}</span>
+        <span className="text-sm font-medium text-neutral-900">View source →</span>
+      </div>
+    </a>
+  )
+}
+
+function GlobeVisual({ language }) {
+  return (
+    <div className="relative overflow-hidden rounded-3xl border border-black/10 bg-[#0f2f24] p-6 text-white shadow-[0_12px_40px_rgba(0,0,0,0.14)]">
+      <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full border border-white/10" />
+      <div className="absolute -bottom-20 -left-20 h-56 w-56 rounded-full border border-white/10" />
+
+      <div className="relative">
+        <div className="text-sm text-white/60">
+          {language === 'en' ? 'Data map concept' : '데이터 지도 컨셉'}
+        </div>
+        <h3 className="mt-2 text-2xl font-semibold tracking-tight">
+          {language === 'en' ? 'A map for finding sources, not comparing countries.' : '국가를 비교하는 대신, 데이터를 찾기 위한 지도입니다.'}
+        </h3>
+        <p className="mt-3 max-w-md text-sm leading-6 text-white/70">
+          {language === 'en'
+            ? 'Use the country cards to move quickly to official crime, delinquency, victimization, and justice-related data sources.'
+            : '국가 카드를 선택하면 범죄, 비행, 피해, 형사사법 관련 공식 데이터 출처를 빠르게 확인할 수 있습니다.'}
+        </p>
+
+        <div className="mt-8 flex justify-center">
+          <svg viewBox="0 0 260 260" className="h-56 w-56 text-white/80" role="img" aria-label="Abstract globe">
+            <circle cx="130" cy="130" r="96" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.8" />
+            <ellipse cx="130" cy="130" rx="42" ry="96" fill="none" stroke="currentColor" strokeWidth="1.2" opacity="0.45" />
+            <ellipse cx="130" cy="130" rx="76" ry="96" fill="none" stroke="currentColor" strokeWidth="1.2" opacity="0.25" />
+            <path d="M37 130h186" stroke="currentColor" strokeWidth="1.2" opacity="0.55" />
+            <path d="M58 82h144" stroke="currentColor" strokeWidth="1.2" opacity="0.25" />
+            <path d="M58 178h144" stroke="currentColor" strokeWidth="1.2" opacity="0.25" />
+            <path d="M130 34v192" stroke="currentColor" strokeWidth="1.2" opacity="0.25" />
+
+            <circle cx="83" cy="89" r="5" fill="currentColor" />
+            <circle cx="146" cy="76" r="5" fill="currentColor" />
+            <circle cx="181" cy="141" r="5" fill="currentColor" />
+            <circle cx="105" cy="170" r="5" fill="currentColor" />
+            <circle cx="151" cy="195" r="5" fill="currentColor" />
+
+            <path d="M83 89c28-10 43-13 63-13M146 76c26 18 35 34 35 65M181 141c-30 18-51 25-76 29M105 170c15 16 29 22 46 25" fill="none" stroke="currentColor" strokeWidth="1.2" opacity="0.55" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function StatCard({ label, value, helper, featured = false }) {
+  if (featured) {
+    return (
+      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#0f2f24] p-6 text-white shadow-[0_12px_35px_rgba(15,47,36,0.22)]">
+        <div className="absolute -right-8 -top-10 h-28 w-28 rounded-full border border-white/10" />
+        <div className="absolute -right-2 -top-4 h-16 w-16 rounded-full bg-white/5" />
+        <div className="relative text-sm text-white/65">{label}</div>
+        <div className="relative mt-3 text-5xl font-semibold tracking-tight">{value}</div>
+        {helper && <div className="relative mt-4 max-w-[220px] text-xs leading-5 text-white/65">{helper}</div>}
+      </div>
+    )
+  }
+
+  return (
+    <div className="rounded-3xl border border-black/10 bg-white/70 p-6 shadow-[0_8px_25px_rgba(0,0,0,0.04)]">
+      <div className="text-sm text-neutral-500">{label}</div>
+      <div className="mt-3 text-4xl font-semibold tracking-tight text-neutral-950">{value}</div>
+      {helper && <div className="mt-3 text-xs leading-5 text-neutral-500">{helper}</div>}
+    </div>
+  )
+}
+
+function MetadataBar({ item, maxCount, index }) {
+  const width = maxCount > 0 ? Math.max(7, (item.count / maxCount) * 100) : 0
+
+  return (
+    <div className="rounded-2xl border border-black/5 bg-[#f7f0e3] px-4 py-3">
+      <div className="mb-3 flex items-center justify-between gap-4">
+        <div className="flex min-w-0 items-center gap-3">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-xs font-semibold text-neutral-500 shadow-sm">
+            {index + 1}
+          </span>
+          <span className="truncate text-sm font-medium text-neutral-850">{item.name}</span>
+        </div>
+        <span className="shrink-0 rounded-full bg-white px-3 py-1 text-xs font-semibold text-neutral-700 shadow-sm">
+          {item.count}
+        </span>
+      </div>
+      <div className="h-3 overflow-hidden rounded-full bg-white shadow-inner">
+        <div
+          className="h-full rounded-full bg-[#0f2f24] transition-all duration-500"
+          style={{ width: `${width}%` }}
+        />
+      </div>
+    </div>
+  )
+}
+
+function SnapshotPanel({ title, description, items, maxCount }) {
+  return (
+    <div className="rounded-3xl border border-black/10 bg-white/75 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
+      <div className="flex items-start justify-between gap-4 border-b border-black/10 pb-5">
+        <div>
+          <h3 className="text-lg font-semibold tracking-tight text-neutral-950">{title}</h3>
+          <p className="mt-2 text-sm leading-6 text-neutral-500">{description}</p>
+        </div>
+      </div>
+      <div className="mt-5 space-y-3">
+        {items.slice(0, 6).map((item, index) => (
+          <MetadataBar key={item.name} item={item} maxCount={maxCount} index={index} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function ArchiveSnapshot({ language, countryStats, typeStats, totalDatasets, totalCountries, publicCount, longitudinalCount }) {
+  const topCountryMax = Math.max(...countryStats.map((item) => item.count), 1)
+  const topTypeMax = Math.max(...typeStats.map((item) => item.count), 1)
+
+  const coverageItems = [
+    {
+      label: language === 'en' ? 'Countries / regions' : '국가·지역',
+      value: totalCountries,
+      helper: language === 'en' ? 'Based on catalogue metadata' : '카탈로그 국가 정보 기준',
+    },
+    {
+      label: language === 'en' ? 'Public access' : '공개 접근',
+      value: publicCount,
+      helper: language === 'en' ? 'Includes public links and portals' : '공개 링크 및 포털 포함',
+    },
+    {
+      label: language === 'en' ? 'Longitudinal sources' : '종단자료',
+      value: longitudinalCount,
+      helper: language === 'en' ? 'Panel or longitudinal entries' : '패널·종단 항목',
+    },
+  ]
+
+  return (
+    <section id="snapshot" className="border-b border-black/10 px-6 py-16 lg:px-8 lg:py-20">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <div>
+            <div className="mb-4 inline-flex rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs font-medium uppercase tracking-[0.14em] text-neutral-500">
+              {language === 'en' ? 'Metadata overview' : '메타데이터 요약'}
+            </div>
+            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+              {language === 'en' ? 'Archive snapshot' : '아카이브 현황'}
+            </h2>
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-neutral-600 sm:text-base">
+              {language === 'en'
+                ? 'A quick visual summary of the sources currently collected in this archive.'
+                : '현재 아카이브에 수집된 데이터 출처를 한눈에 볼 수 있도록 요약했습니다.'}
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            {coverageItems.map((item) => (
+              <StatCard key={item.label} {...item} />
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10 grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
+          <StatCard
+            featured
+            label={language === 'en' ? 'Dataset sources' : '데이터 출처'}
+            value={totalDatasets}
+            helper={language === 'en' ? 'Curated entries currently included in the archive.' : '현재 아카이브에 선별해 등록한 데이터 출처 수입니다.'}
+          />
+
+          <div className="grid gap-4 lg:grid-cols-2">
+            <SnapshotPanel
+              title={language === 'en' ? 'Sources by country' : '국가별 출처 수'}
+              description={language === 'en' ? 'Top catalogue coverage by country or region.' : '국가·지역별로 등록된 출처 수입니다.'}
+              items={countryStats}
+              maxCount={topCountryMax}
+            />
+            <SnapshotPanel
+              title={language === 'en' ? 'Top data types' : '주요 데이터 유형'}
+              description={language === 'en' ? 'Frequently used metadata tags in the archive.' : '아카이브에서 많이 등장하는 데이터 유형입니다.'}
+              items={typeStats}
+              maxCount={topTypeMax}
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function App() {
+  const [language, setLanguage] = useState('en')
+  const [draftFilters, setDraftFilters] = useState(INITIAL_FILTERS)
+  const [filters, setFilters] = useState(INITIAL_FILTERS)
+  const [showAll, setShowAll] = useState(false)
+  const INITIAL_VISIBLE_COUNT = 12
+
+  const countries = useMemo(() => {
+    return uniqueValues(datasets, 'country_en').sort((a, b) => a.localeCompare(b))
+  }, [])
+
+  const featuredCountries = useMemo(() => {
+    return FEATURED_COUNTRY_LIST.map((countryItem) => {
+      const countryDatasets = datasets.filter((dataset) => matchesCountry(dataset, countryItem.value))
+
+      return {
+        code: countryItem.code,
+        name: language === 'en' ? countryItem.name_en : countryItem.name_ko,
+        value: countryItem.value,
+        count: `${countryDatasets.length} sources`,
+      }
+    })
+  }, [language])
+
+  const filteredDatasets = useMemo(() => {
+    const normalizedQuery = filters.query.trim().toLowerCase()
+
+    return datasets.filter((dataset) => {
+      const searchableText = [
+        dataset.name_en,
+        dataset.name_ko,
+        dataset.institution_en,
+        dataset.institution_ko,
+        dataset.country_en,
+        dataset.country_ko,
+        ...(dataset.topics_en || []),
+        ...(dataset.topics_ko || []),
+        ...(dataset.population || []),
+        ...(dataset.design || []),
+        ...(dataset.dataType || []),
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase()
+
+      const queryMatch = !normalizedQuery || searchableText.includes(normalizedQuery)
+      const countryMatch = matchesCountry(dataset, filters.country)
+      const populationMatch = matchesArrayFilter(dataset.population, filters.population)
+      const designMatch = matchesArrayFilter(dataset.design, filters.design)
+      const dataTypeMatch = matchesArrayFilter(dataset.dataType, filters.dataType)
+      const accessMatch = matchesArrayFilter(dataset.access, filters.access)
+
+      return queryMatch && countryMatch && populationMatch && designMatch && dataTypeMatch && accessMatch
+    })
+  }, [filters])
+
+  const visibleDatasets = showAll
+    ? filteredDatasets
+    : filteredDatasets.slice(0, INITIAL_VISIBLE_COUNT)
+
+  const hasMoreDatasets = filteredDatasets.length > INITIAL_VISIBLE_COUNT
+
+  const countryStats = useMemo(() => {
+    return countBy(datasets, (dataset) => {
+      if (dataset.country_en === 'European Union' || dataset.country_en === 'International') {
+        return 'International'
+      }
+      return dataset.country_en
+    }).slice(0, 8)
+  }, [])
+
+  const typeStats = useMemo(() => {
+    return countBy(datasets, (dataset) => dataset.dataType || []).slice(0, 8)
+  }, [])
+
+  const totalCountries = useMemo(() => {
+    return uniqueValues(datasets, 'country_en').length
+  }, [])
+
+  const publicCount = useMemo(() => {
+    return datasets.filter((dataset) => matchesArrayFilter(dataset.access, 'Public')).length
+  }, [])
+
+  const longitudinalCount = useMemo(() => {
+    return datasets.filter((dataset) => matchesArrayFilter(dataset.design, 'Longitudinal')).length
+  }, [])
+
+  const updateDraftFilter = (key, value) => {
+    setDraftFilters((current) => ({
+      ...current,
+      [key]: value,
+    }))
+  }
+
+  const applyFilters = () => {
+    setFilters(draftFilters)
+    setShowAll(false)
+    document.getElementById('sources')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const clearFilters = () => {
+    setDraftFilters(INITIAL_FILTERS)
+    setFilters(INITIAL_FILTERS)
+    setShowAll(false)
+  }
+
+  const handleCountryBrowse = (countryValue) => {
+    const nextFilters = {
+      ...INITIAL_FILTERS,
+      country: countryValue,
+    }
+
+    setDraftFilters(nextFilters)
+    setFilters(nextFilters)
+    setShowAll(false)
+    document.getElementById('sources')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  return (
+    <div className="min-h-screen bg-[#0f2f24] text-neutral-900">
+      <div className="mx-auto max-w-[1240px] px-6 py-6 lg:px-10 lg:py-10">
+        <div className="overflow-hidden rounded-[28px] border border-black/10 bg-[#f7f0e3] shadow-[0_18px_60px_rgba(0,0,0,0.08)]">
+          <header className="border-b border-black/10 px-6 py-5 lg:px-8">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div className="flex items-center gap-3">
+                <div className="h-3 w-3 rotate-45 bg-black" />
+                <div>
+                  <div className="text-[15px] font-semibold tracking-tight">Global Crime Data Archive</div>
+                  <div className="text-xs text-neutral-500">Open crime and delinquency data discovery</div>
+                </div>
+              </div>
+
+              <nav className="flex flex-wrap items-center gap-5 text-sm text-neutral-600">
+                <a href="#about" className="transition hover:text-black">About</a>
+                <a href="#browse" className="transition hover:text-black">Browse</a>
+                <a href="#snapshot" className="transition hover:text-black">Snapshot</a>
+                <a href="#filters" className="transition hover:text-black">Filters</a>
+                <a href="#sources" className="transition hover:text-black">Sources</a>
+                <button
+                  onClick={() => setLanguage((current) => (current === 'en' ? 'ko' : 'en'))}
+                  className="rounded-md border border-black/10 bg-white px-4 py-2 text-sm font-medium text-neutral-700 transition hover:border-black/20 hover:text-black"
+                >
+                  {language === 'en' ? 'KR' : 'EN'}
+                </button>
+              </nav>
+            </div>
+          </header>
+
+          <main>
+            <section
+              id="about"
+              className="relative overflow-hidden border-b border-black/10 px-6 py-20 lg:px-8 lg:py-28"
+            >
+              <div className="absolute inset-0 opacity-50" aria-hidden="true">
+                <div
+                  className="h-full w-full"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px)',
+                    backgroundSize: '20px 20px',
+                  }}
+                />
+              </div>
+
+              <div className="relative mx-auto max-w-4xl text-center">
+                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/90 px-3 py-1 text-sm text-neutral-600">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                  {language === 'en'
+                    ? 'Researcher-focused archive'
+                    : '연구자 중심 데이터 아카이브'}
+                </div>
+
+                <h1 className="mx-auto max-w-3xl text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl lg:text-6xl">
+                  {language === 'en' ? (
+                    <>
+                      Find open crime and delinquency data
+                      <br />
+                      across countries.
+                    </>
+                  ) : (
+                    <>
+                      세계 각국의 범죄·비행 데이터를
+                      <br />
+                      모아둔 범죄 데이터 아카이브
+                    </>
+                  )}
+                </h1>
+
+                <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-600 sm:text-lg">
+                  {language === 'en' ? (
+                    <>
+                      A bilingual directory designed for researchers, policymakers, and public-sector professionals
+                      <br />
+                      who need fast access to adult and youth crime-related datasets.
+                    </>
+                  ) : (
+                    <>
+                      전세계의 범죄, 청소년 비행, 형사사법 관련 공개 데이터를
+                      <br />
+                      빠르게 찾아볼 수 있도록 모아둔 데이터 아카이브입니다.
+                    </>
+                  )}
+                </p>
+
+                <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                  <a
+                    href="#sources"
+                    className="min-w-[150px] rounded-md bg-black px-5 py-3 text-center text-sm font-medium text-white transition hover:opacity-90"
+                  >
+                    {language === 'en' ? 'Browse datasets' : '데이터 둘러보기'}
+                  </a>
+
+                  <a
+                    href="#filters"
+                    className="min-w-[150px] rounded-md border border-black/10 bg-white px-5 py-3 text-center text-sm font-medium text-neutral-700 transition hover:border-black/20 hover:text-black"
+                  >
+                    {language === 'en' ? 'Use filters' : '필터 사용하기'}
+                  </a>
+                </div>
+              </div>
+            </section>
+
+            <section id="browse" className="border-b border-black/10 px-6 py-16 lg:px-8 lg:py-20">
+              <div className="mx-auto max-w-6xl">
+                <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                  <GlobeVisual language={language} />
+
+                  <div>
+                    <div className="text-left">
+                      <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                        {language === 'en' ? 'Browse by country' : '국가별 탐색'}
+                      </h2>
+                      <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600 sm:text-base">
+                        {language === 'en'
+                          ? 'Start with a country and move directly to official portals, surveys, panel studies, and justice-related sources.'
+                          : '국가를 선택하면 공식통계, 조사자료, 패널자료, 형사사법 관련 데이터 출처를 바로 확인할 수 있습니다.'}
+                      </p>
+                    </div>
+
+                    <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                      {featuredCountries.map((item) => (
+                        <button
+                          key={item.value}
+                          onClick={() => handleCountryBrowse(item.value)}
+                          className="rounded-2xl border border-black/10 bg-white p-6 text-left transition hover:-translate-y-0.5 hover:border-black/20 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                        >
+                          <div className="flex items-start justify-between">
+                            <div>
+                              <div className="text-xs uppercase tracking-[0.18em] text-neutral-400">{item.code}</div>
+                              <h3 className="mt-2 text-xl font-semibold tracking-tight">{item.name}</h3>
+                            </div>
+                            <div className="rounded-full bg-neutral-100 px-3 py-1 text-xs text-neutral-600">{item.count}</div>
+                          </div>
+                          <p className="mt-6 text-sm leading-6 text-neutral-600">
+                            {language === 'en' ? `Explore curated sources for ${item.name}.` : `${item.name} 관련 데이터 출처 보기`}
+                          </p>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <ArchiveSnapshot
+              language={language}
+              countryStats={countryStats}
+              typeStats={typeStats}
+              totalDatasets={datasets.length}
+              totalCountries={totalCountries}
+              publicCount={publicCount}
+              longitudinalCount={longitudinalCount}
+            />
+
+            <section id="filters" className="border-b border-black/10 px-6 py-16 lg:px-8 lg:py-20">
+              <div className="mx-auto max-w-6xl">
+                <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-start">
+                  <div>
+                    <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                      {language === 'en' ? 'Search and filter datasets' : '데이터 검색 및 필터'}
+                    </h2>
+                    <p className="mt-4 max-w-2xl text-sm leading-6 text-neutral-600 sm:text-base">
+                      {language === 'en'
+                        ? 'Choose search conditions first, then press Search datasets to update the results.'
+                        : '검색 조건을 먼저 선택한 뒤 검색 버튼을 눌러 결과를 확인할 수 있습니다.'}
+                    </p>
+
+                    <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                      {features.map((feature) => (
+                        <div
+                          key={feature.title_en}
+                          className="rounded-2xl border border-black/5 bg-[#f7f0e3] p-5"
+                        >
+                          <h3 className="text-base font-semibold tracking-tight">
+                            {language === 'en' ? feature.title_en : feature.title_ko}
+                          </h3>
+                          <p className="mt-2 text-sm leading-6 text-neutral-600">
+                            {language === 'en' ? feature.desc_en : feature.desc_ko}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-3xl border border-white/10 bg-[#0f2f24] p-6 text-white shadow-[0_12px_40px_rgba(0,0,0,0.16)]">
+                    <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                      <div>
+                        <div className="text-sm text-white/60">Filter panel</div>
+                        <h3 className="mt-1 text-xl font-semibold">
+                          {filteredDatasets.length} / {datasets.length} sources
+                        </h3>
+                      </div>
+                      <button onClick={clearFilters} className="rounded-full border border-white/15 px-3 py-1 text-xs text-white/70 hover:text-white">
+                        Clear
+                      </button>
+                    </div>
+
+                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                      <label className="block sm:col-span-2">
+                        <span className="mb-2 block text-xs font-medium uppercase tracking-[0.14em] text-white/60">Search</span>
+                        <input
+                          value={draftFilters.query}
+                          onChange={(event) => updateDraftFilter('query', event.target.value)}
+                          onKeyDown={(event) => {
+                            if (event.key === 'Enter') applyFilters()
+                          }}
+                          placeholder="crime, youth, victimization, Korea..."
+                          className="w-full rounded-xl border border-white/10 bg-white px-4 py-3 text-sm text-neutral-900 outline-none"
+                        />
+                      </label>
+
+                      <label className="block">
+                        <span className="mb-2 block text-xs font-medium uppercase tracking-[0.14em] text-white/60">Country</span>
+                        <select value={draftFilters.country} onChange={(event) => updateDraftFilter('country', event.target.value)} className="w-full rounded-xl border border-white/10 bg-white px-4 py-3 text-sm text-neutral-900 outline-none">
+                          <option value="All">All</option>
+                          <option value="__INTERNATIONAL__">International</option>
+                          {countries.map((item) => <option key={item} value={item}>{item}</option>)}
+                        </select>
+                      </label>
+
+                      <label className="block">
+                        <span className="mb-2 block text-xs font-medium uppercase tracking-[0.14em] text-white/60">Population</span>
+                        <select value={draftFilters.population} onChange={(event) => updateDraftFilter('population', event.target.value)} className="w-full rounded-xl border border-white/10 bg-white px-4 py-3 text-sm text-neutral-900 outline-none">
+                          <option value="All">All</option>
+                          {FILTERS.population.map((item) => <option key={item} value={item}>{item}</option>)}
+                        </select>
+                      </label>
+
+                      <label className="block">
+                        <span className="mb-2 block text-xs font-medium uppercase tracking-[0.14em] text-white/60">Design</span>
+                        <select value={draftFilters.design} onChange={(event) => updateDraftFilter('design', event.target.value)} className="w-full rounded-xl border border-white/10 bg-white px-4 py-3 text-sm text-neutral-900 outline-none">
+                          <option value="All">All</option>
+                          {FILTERS.design.map((item) => <option key={item} value={item}>{item}</option>)}
+                        </select>
+                      </label>
+
+                      <label className="block">
+                        <span className="mb-2 block text-xs font-medium uppercase tracking-[0.14em] text-white/60">Data type</span>
+                        <select value={draftFilters.dataType} onChange={(event) => updateDraftFilter('dataType', event.target.value)} className="w-full rounded-xl border border-white/10 bg-white px-4 py-3 text-sm text-neutral-900 outline-none">
+                          <option value="All">All</option>
+                          {FILTERS.dataType.map((item) => <option key={item} value={item}>{item}</option>)}
+                        </select>
+                      </label>
+
+                      <label className="block sm:col-span-2">
+                        <span className="mb-2 block text-xs font-medium uppercase tracking-[0.14em] text-white/60">Access</span>
+                        <select value={draftFilters.access} onChange={(event) => updateDraftFilter('access', event.target.value)} className="w-full rounded-xl border border-white/10 bg-white px-4 py-3 text-sm text-neutral-900 outline-none">
+                          <option value="All">All</option>
+                          {FILTERS.access.map((item) => <option key={item} value={item}>{item}</option>)}
+                        </select>
+                      </label>
+                    </div>
+
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {quickFilters.slice(0, 6).map((filter) => (
+                        <span key={filter} className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/80">
+                          {filter}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                      <button
+                        onClick={applyFilters}
+                        className="rounded-xl bg-white px-4 py-3 text-sm font-semibold text-[#0f2f24] transition hover:bg-white/90"
+                      >
+                        {language === 'en' ? 'Search datasets' : '데이터 검색'}
+                      </button>
+                      <button
+                        onClick={clearFilters}
+                        className="rounded-xl border border-white/15 px-4 py-3 text-sm font-semibold text-white/80 transition hover:text-white"
+                      >
+                        {language === 'en' ? 'Clear filters' : '필터 초기화'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="sources" className="px-6 py-16 lg:px-8 lg:py-20">
+              <div className="mx-auto max-w-6xl">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                      {language === 'en' ? 'Dataset sources' : '데이터 출처'}
+                    </h2>
+                    <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600 sm:text-base">
+                      {language === 'en'
+                        ? `${filteredDatasets.length} sources found. Click a card to open the official source.`
+                        : `${filteredDatasets.length}개의 출처가 검색되었습니다. 카드를 클릭하면 공식 출처로 이동합니다.`}
+                    </p>
+                  </div>
+                  <span className="rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-medium text-neutral-500">
+                    {language === 'en' ? 'Suggestions coming later' : '데이터 제안 기능은 추후 추가'}
+                  </span>
+                </div>
+
+                {filteredDatasets.length === 0 ? (
+                  <div className="mt-10 rounded-2xl border border-black/10 bg-white p-8 text-center text-neutral-600">
+                    No datasets found. Try clearing filters or using a broader keyword.
+                  </div>
+                ) : (
+                  <>
+                    <div className="mt-10 grid gap-4 lg:grid-cols-3">
+                      {visibleDatasets.map((dataset) => (
+                        <DatasetCard key={dataset.id} dataset={dataset} language={language} />
+                      ))}
+                    </div>
+
+                    {hasMoreDatasets && (
+                      <div className="mt-8 flex justify-center">
+                        <button
+                          onClick={() => setShowAll((current) => !current)}
+                          className="rounded-md border border-black/10 bg-white px-5 py-3 text-sm font-medium text-neutral-700 transition hover:border-black/20 hover:text-black"
+                        >
+                          {showAll
+                            ? language === 'en'
+                              ? 'Show less'
+                              : '접기'
+                            : language === 'en'
+                              ? `More datasets (${filteredDatasets.length - INITIAL_VISIBLE_COUNT} more)`
+                              : `더 보기 (${filteredDatasets.length - INITIAL_VISIBLE_COUNT}개 더)`}
+                        </button>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            </section>
+          </main>
+
+          <footer className="border-t border-black/10 px-6 py-8 text-center text-sm text-neutral-500 lg:px-8">
+            <p>
+              Curated by <span className="font-medium text-neutral-700">Dain Cho</span> · Forensic Psychology / Criminology Researcher
+            </p>
+            <p className="mt-2">
+              Global Crime Data Archive is a research-based side project for improving access to open crime and delinquency data.
+            </p>
+          </footer>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default App
