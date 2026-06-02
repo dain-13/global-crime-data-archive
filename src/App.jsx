@@ -909,9 +909,6 @@ function App() {
                           {filteredDatasets.length} / {datasets.length} sources
                         </h3>
                       </div>
-                      <button onClick={clearFilters} className="rounded-full border border-white/15 px-3 py-1 text-xs text-white/70 hover:text-white">
-                        {language === 'en' ? 'Clear' : '초기화'}
-                      </button>
                     </div>
 
                     <div className="mt-6 grid gap-4 sm:grid-cols-2">
