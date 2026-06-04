@@ -388,7 +388,7 @@ const DATA_LANDSCAPES = {
           },
           {
             name_en: 'CDC, SAMHSA, NIH and BLS',
-            name_ko: 'CDC, SAMHSA, NIH, 노동통계국',
+            name_ko: 'CDC, SAMHSA, NIH and BLS',
             description_en: 'Official health, substance-use, development, and longitudinal data that can support crime-related risk-factor research.',
             description_ko: '범죄 관련 위험요인 연구에 활용할 수 있는 보건, 물질사용, 발달, 종단자료를 제공합니다.',
             sources: [
@@ -457,7 +457,7 @@ const DATA_LANDSCAPES = {
           },
           {
             name_en: 'Home Office',
-            name_ko: '영국 내무부',
+            name_ko: '영국 내무부(HO)',
             description_en: 'Police-recorded crime collections, outcomes, hate crime, drug seizures, and related open data releases.',
             description_ko: '경찰기록범죄, 범죄처리 결과, 증오범죄, 약물압수 등 공식통계와 오픈데이터를 제공합니다.',
             sources: [
@@ -468,7 +468,7 @@ const DATA_LANDSCAPES = {
           },
           {
             name_en: 'Ministry of Justice',
-            name_ko: '영국 법무부',
+            name_ko: '영국 법무부(MoJ)',
             description_en: 'Justice-system statistics, courts, case processing, and justice administrative data.',
             description_ko: '사법체계 통계, 법원, 사건처리, 사법행정 데이터를 제공합니다.',
             sources: [
