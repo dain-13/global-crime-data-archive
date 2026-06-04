@@ -857,10 +857,18 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
     }
 
     if (node.type === 'source') {
+      const datasetId = node.datasetIds?.[0]
+      const matchedDataset = datasets.find((dataset) => dataset.id === datasetId)
+    
+      if (matchedDataset?.link) {
+        window.open(matchedDataset.link, '_blank', 'noopener,noreferrer')
+        return
+      }
+    
+      // 혹시 link가 없는 자료가 있을 경우에만 기존 방식으로 하단 목록 필터링
       if (node.parentInstitutionId) setExpandedInstitutionId(node.parentInstitutionId)
       focusLandscape(node)
     }
-  }
 
   const handleDragStart = (event, node, position) => {
     event.preventDefault()
@@ -892,7 +900,7 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
             <p className="mt-4 max-w-2xl text-sm leading-6 text-neutral-600 sm:text-base">
               {language === 'en'
                 ? 'Switch between official and research sources, drag nodes to rearrange the graph, and click an institution to reveal its datasets.'
-                : '공식자료와 연구자료를 전환해보고, 노드를 드래그해 배치를 바꿀 수 있습니다. 기관을 누르면 연결된 데이터가 나타납니다.'}
+                : '공식자료와 연구자료를 선택하고, 노드를 드래그해 배치를 바꿀 수 있습니다. 기관을 누르면 연결된 데이터가 나타납니다.'}
             </p>
           </div>
 
@@ -1006,7 +1014,7 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
                   </span>
                   {language === 'en'
                     ? ' is open. Click the institution again to filter all its datasets, or click an individual dataset node.'
-                    : '이 열려 있습니다. 기관을 한 번 더 누르면 해당 기관 전체가, 개별 데이터 노드를 누르면 해당 자료만 아래 목록에 표시됩니다.'}
+                    : : '이 열려 있습니다. 기관을 한 번 더 누르면 기관의 데이터가 하단에 표시되고, 개별 데이터 노드를 누르면 원출처로 이동합니다.'}}
                 </p>
               ) : (
                 <p className="truncate">
