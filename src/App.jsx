@@ -680,7 +680,7 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
       label_en: activeGroup.title_en,
       label_ko: activeGroup.title_ko,
       x: 50,
-      y: 29,
+      y: 32,
       count: groupSourceIds.length,
       datasetIds: groupSourceIds,
     })
@@ -2199,7 +2199,7 @@ function App() {
 
           <footer className="border-t border-black/10 px-6 py-8 text-center text-sm text-neutral-500 lg:px-8">
             <p>
-              Curated by <span className="font-medium text-neutral-700">Dain Cho</span> · Forensic Psychology / Criminology Researcher
+              Curated by <span className="font-medium text-neutral-700">Dain Cho</span> · Forensic Psychology / Criminology Researcher (since 2026.3.)
             </p>
             <p className="mt-2">
               Global Crime Data Archive is a research-based side project for improving access to crime and criminal justice datasets, plus related behavioral, health, and developmental research data.
