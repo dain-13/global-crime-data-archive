@@ -835,40 +835,41 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
   const handleNodeClick = (event, node) => {
     event.preventDefault()
     if (dragMovedRef.current) return
-
+  
     if (node.type === 'country') {
       onCountrySelect(selectedCountry)
       return
     }
-
+  
     if (node.type === 'group') {
       focusLandscape(node)
       return
     }
-
+  
     if (node.type === 'institution') {
       if (expandedInstitutionId === node.id) {
         focusLandscape(node)
         return
       }
-
+  
       setExpandedInstitutionId(node.id)
       return
     }
-
+  
     if (node.type === 'source') {
       const datasetId = node.datasetIds?.[0]
       const matchedDataset = datasets.find((dataset) => dataset.id === datasetId)
-    
+  
       if (matchedDataset?.link) {
         window.open(matchedDataset.link, '_blank', 'noopener,noreferrer')
         return
       }
-    
-      // 혹시 link가 없는 자료가 있을 경우에만 기존 방식으로 하단 목록 필터링
+  
       if (node.parentInstitutionId) setExpandedInstitutionId(node.parentInstitutionId)
       focusLandscape(node)
+      return
     }
+  }
 
   const handleDragStart = (event, node, position) => {
     event.preventDefault()
@@ -1014,7 +1015,7 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
                   </span>
                   {language === 'en'
                     ? ' is open. Click the institution again to filter all its datasets, or click an individual dataset node.'
-                    : '이 열려 있습니다. 기관을 한 번 더 누르면 기관의 데이터가 하단에 표시되고, 개별 데이터 노드를 누르면 원출처로 이동합니다.'}}
+                    : '이 열려 있습니다. 기관을 한 번 더 누르면 기관의 데이터가 하단에 표시되고, 개별 데이터 노드를 누르면 원출처로 이동합니다.'}
                 </p>
               ) : (
                 <p className="truncate">
