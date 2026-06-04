@@ -680,7 +680,7 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
       label_en: activeGroup.title_en,
       label_ko: activeGroup.title_ko,
       x: 50,
-      y: 32,
+      y: 35,
       count: groupSourceIds.length,
       datasetIds: groupSourceIds,
     })
