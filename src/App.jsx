@@ -694,9 +694,9 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
       2: [{ x: 23, y: 42 }, { x: 77, y: 42 }],
       3: [{ x: 17, y: 35 }, { x: 83, y: 35 }, { x: 50, y: 70 }],
       4: [{ x: 18, y: 29 }, { x: 82, y: 29 }, { x: 30, y: 63 }, { x: 70, y: 63 }],
-      5: [{ x: 19, y: 27 }, { x: 81, y: 27 }, { x: 15, y: 51 }, { x: 85, y: 51 }, { x: 50, y: 66 }],
+      5: [{ x: 19, y: 27 }, { x: 81, y: 27 }, { x: 15, y: 47 }, { x: 85, y: 47 }, { x: 50, y: 64 }],
       6: [{ x: 18, y: 26 }, { x: 82, y: 26 }, { x: 13, y: 48 }, { x: 87, y: 48 }, { x: 31, y: 70 }, { x: 69, y: 70 }],
-      7: [{ x: 18, y: 25 }, { x: 82, y: 25 }, { x: 12, y: 43 }, { x: 88, y: 43 }, { x: 25, y: 64 }, { x: 75, y: 64 }, { x: 50, y: 70 }],
+      7: [{ x: 18, y: 23 }, { x: 82, y: 23 }, { x: 12, y: 40 }, { x: 88, y: 40 }, { x: 25, y: 60 }, { x: 75, y: 60 }, { x: 50, y: 68 }],
       8: [{ x: 18, y: 24 }, { x: 82, y: 24 }, { x: 12, y: 43 }, { x: 88, y: 43 }, { x: 22, y: 64 }, { x: 78, y: 64 }, { x: 40, y: 76 }, { x: 60, y: 76 }],
     }
     const institutionPositions = activeGroup.institutions.map((_, index) => {
@@ -738,7 +738,7 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
           const rowIndex = Math.floor(sourceIndex / columns)
           const spacing = columns > 1 ? 72 / (columns - 1) : 0
           const sourceX = columns === 1 ? 50 : 14 + colIndex * spacing
-          const sourceY = 83 + rowIndex * 8
+          const sourceY = 80 + rowIndex * 8
 
           nodes.push({
             id: sourceNodeId,
