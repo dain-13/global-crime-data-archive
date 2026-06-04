@@ -1014,7 +1014,7 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
                   </span>
                   {language === 'en'
                     ? ' is open. Click the institution again to filter all its datasets, or click an individual dataset node.'
-                    : : '이 열려 있습니다. 기관을 한 번 더 누르면 기관의 데이터가 하단에 표시되고, 개별 데이터 노드를 누르면 원출처로 이동합니다.'}}
+                    : '이 열려 있습니다. 기관을 한 번 더 누르면 기관의 데이터가 하단에 표시되고, 개별 데이터 노드를 누르면 원출처로 이동합니다.'}
                 </p>
               ) : (
                 <p className="truncate">
