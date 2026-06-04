@@ -740,7 +740,7 @@ function DataLandscape({ language, onCountrySelect, onLandscapeFocus, activeLand
           const rowIndex = Math.floor(sourceIndex / columns)
           const spacing = columns > 1 ? 76 / (columns - 1) : 0
           const sourceX = columns === 1 ? 50 : 12 + colIndex * spacing
-          const sourceY = 77 + rowIndex * 7
+          const sourceY = 85 + rowIndex * 7
 
           nodes.push({
             id: sourceNodeId,
